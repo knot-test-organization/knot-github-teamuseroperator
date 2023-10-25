@@ -1,0 +1,29 @@
+---
+# tasks file for GithubTeamUser
+# - name: set username variable
+#   set_fact:
+#     username: "{{ lookup('env','GITHUB_USERNAME') }}"
+
+- name: set PAT variable
+  set_fact:
+    PAT: "{{ lookup('env','PAT') }}"
+
+- name: set team_slug variable
+  set_fact:
+    team_slug: "{{ repo_name | lower | replace(' ', '-') }}"
+
+# https://api.github.com/orgs/NTTData-HybridCloud/teams/<team_slug>/memberships/<username>
+# tasks file for GithubTeam
+- name: Add a user to a team
+  uri:
+    url: "https://api.github.com/orgs/{{ organization_name }}/teams/{{ team_slug }}/memberships/{{ name }}"
+    method: PUT
+    headers:
+      Accept: "application/vnd.github+json"
+      Authorization: "Bearer {{ PAT }}"
+    body_format: json
+    body:
+      role: "{{ github_role }}"
+    status_code: 200
+  ignore_errors: true
+

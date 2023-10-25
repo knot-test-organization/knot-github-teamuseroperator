@@ -1,0 +1,31 @@
+# permissions for end users to edit githubteamusers.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  labels:
+    app.kubernetes.io/name: clusterrole
+    app.kubernetes.io/instance: githubteamuser-editor-role
+    app.kubernetes.io/component: rbac
+    app.kubernetes.io/created-by: test-operator
+    app.kubernetes.io/part-of: test-operator
+    app.kubernetes.io/managed-by: kustomize
+  name: githubteamuser-editor-role
+rules:
+- apiGroups:
+  - github.team.user.nttdata.com
+  resources:
+  - githubteamusers
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - github.team.user.nttdata.com
+  resources:
+  - githubteamusers/status
+  verbs:
+  - get

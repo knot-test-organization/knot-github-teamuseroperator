@@ -1,0 +1,10 @@
+---
+# Use the 'create api' subcommand to add watches to this file.
+- version: v1alpha1
+  group: github.team.user.nttdata.com
+  kind: GithubTeamUser
+  playbook: playbooks/githubteamuser-add.yaml
+  finalizer:
+    name: github.team.nttdata.com
+    playbook: playbooks/githubteamuser-delete.yaml
+#+kubebuilder:scaffold:watch
